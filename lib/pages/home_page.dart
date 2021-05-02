@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -7,8 +8,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isOpen = false;
-  double alto = 50;
-  double ancho = 200;
+  double altoMenuSmall = 75;
+  double anchoMenuSmall = 250;
   double opacity = 1;
   late double drag;
   late double dragStart;
@@ -38,9 +39,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    paddingTop = MediaQuery.of(context).size.height * 0.90;
-    paddingLeft = MediaQuery.of(context).size.width * 0.33333333;
-    paddingRight = MediaQuery.of(context).size.width * 0.3333333;
+    paddingTop = MediaQuery.of(context).size.height * 0.85;
+    paddingLeft = MediaQuery.of(context).size.width * 0.25;
+    paddingRight = MediaQuery.of(context).size.width * 0.25;
     return Material(
       child: Stack(
         children: [
@@ -50,18 +51,7 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   _buildHeader(),
-                  Container(
-                    padding: EdgeInsets.all(20),
-                    width: MediaQuery.of(context).size.width,
-                    child: Text(
-                      'Recently played',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
+                  _buildTitleRecentlyDisplayed(context),
                   _getBuildAlbum(
                       'assets/images/img1.png',
                       'assets/images/avatar.png',
@@ -97,7 +87,7 @@ class _HomePageState extends State<HomePage> {
               top: isOpen ? 0 : paddingTop,
               left: isOpen ? paddingLeftOpen : paddingLeft,
               right: isOpen ? paddingRightOpen : paddingRight,
-              bottom: isOpen ? paddingBottomOpen : paddingBottom,
+              bottom: isOpen ? paddingBottomOpen : 30,
             ),
             child: GestureDetector(
               onVerticalDragEnd: (details) {
@@ -107,6 +97,8 @@ class _HomePageState extends State<HomePage> {
                   altoOpen = MediaQuery.of(context).size.height * 0.6;
                   anchoOpen = MediaQuery.of(context).size.width;
                   paddingBottomOpen = 0;
+                  opacityButtonsOpen = 1;
+                  opacityPipeOpen = 1;
                 } else {
                   isOpen = false;
                 }
@@ -186,8 +178,8 @@ class _HomePageState extends State<HomePage> {
                     end: Alignment.centerRight, //end of the gradient color
                   ),
                 ),
-                height: isOpen ? altoOpen : alto,
-                width: isOpen ? anchoOpen : ancho,
+                height: isOpen ? altoOpen : altoMenuSmall,
+                width: isOpen ? anchoOpen : anchoMenuSmall,
                 child: isOpen
                     ? AnimatedContainer(
                         duration: Duration(milliseconds: 200),
@@ -201,7 +193,7 @@ class _HomePageState extends State<HomePage> {
                               Container(
                                 margin: EdgeInsets.only(top: 20),
                                 decoration: BoxDecoration(
-                                  color: Color.fromRGBO(116, 81, 255, 1),
+                                  color: Color.fromRGBO(105, 70, 255, 1),
                                   borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(50),
                                     topRight: Radius.circular(50),
@@ -237,7 +229,7 @@ class _HomePageState extends State<HomePage> {
                                 child: Text(
                                   'Lxst Cxst',
                                   style: TextStyle(
-                                    color: Colors.white12,
+                                    color: Colors.white24,
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -259,12 +251,94 @@ class _HomePageState extends State<HomePage> {
                                   margin: EdgeInsets.only(top: 25),
                                   width: anchoOpen,
                                   height: altoOpen * 0.1,
-                                  child: Center(
-                                    child: Container(
-                                      color: Colors.white,
-                                      height: 40,
-                                      width: 3,
-                                    ),
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  color: Colors.transparent,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: Color.fromRGBO(
+                                                            174, 82, 255, 1),
+                                                        blurRadius: 50)
+                                                  ]),
+                                              width: 70,
+                                              height: 50,
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  color: Colors.transparent,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: Colors
+                                                            .lightBlueAccent,
+                                                        blurRadius: 30)
+                                                  ]),
+                                              width: 50,
+                                              height: 50,
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  color: Colors.transparent,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: Colors.green,
+                                                        blurRadius: 25)
+                                                  ]),
+                                              width: 70,
+                                              height: 50,
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  color: Colors.transparent,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: Colors.blue,
+                                                        blurRadius: 30)
+                                                  ]),
+                                              width: 60,
+                                              height: 50,
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  color: Colors.transparent,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color:
+                                                            Colors.purpleAccent,
+                                                        blurRadius: 30)
+                                                  ]),
+                                              width: 60,
+                                              height: 50,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Center(
+                                        child: Container(
+                                          color: Colors.white,
+                                          height: 40,
+                                          width: 3,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -306,11 +380,30 @@ class _HomePageState extends State<HomePage> {
                     : _getMenuSmall(context),
               ),
             ),
-          )
+          ),
+          _getBottomBar(context, paddingRight),
         ],
       ),
     );
   }
+}
+
+Widget _getBottomBar(context, paddingRight) {
+  return AnimatedContainer(
+    duration: Duration(milliseconds: 200),
+    child: Positioned(
+      bottom: MediaQuery.of(context).size.height * 0.015,
+      child: Container(
+        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.32),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
+        ),
+        width: 150,
+        height: 3,
+      ),
+    ),
+  );
 }
 
 Widget _buildHeader() {
@@ -337,42 +430,31 @@ Widget _buildHeader() {
   );
 }
 
-Widget _getMenuSmall(BuildContext context) {
-  return Stack(
+Widget _getMenuSmall(context) {
+  return Row(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
-      Positioned(
-        left: 20,
-        top: 12,
-        child: Container(
-            child: Icon(Icons.file_copy_outlined, color: Colors.white)),
-      ),
-      Positioned(
-        left: 50,
-        top: 5,
-        child: Container(
-          height: 40,
-          width: 40,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(100),
-            child: Image.asset(
-              'assets/images/img1.png',
-              fit: BoxFit.cover,
-            ),
+      Container(child: Icon(Icons.file_copy_outlined, color: Colors.white)),
+      Container(
+        height: 50,
+        width: 50,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(100),
+          child: Image.asset(
+            'assets/images/img1.png',
+            fit: BoxFit.cover,
           ),
         ),
       ),
-      Positioned(
-        left: 100,
-        top: 12,
-        child: Container(
-          height: 25,
-          width: 25,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(100),
-            child: Image.asset(
-              'assets/images/avatar.png',
-              fit: BoxFit.cover,
-            ),
+      Container(
+        height: 30,
+        width: 30,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(100),
+          child: Image.asset(
+            'assets/images/avatar.png',
+            fit: BoxFit.cover,
           ),
         ),
       ),
@@ -410,7 +492,6 @@ Widget _getBuildAlbum(String imgRoute, String imgAvatarRoute, String nameAlbum,
       Container(
         color: Colors.white,
         height: MediaQuery.of(context).size.width * 0.95,
-        width: MediaQuery.of(context).size.width * 0.95,
         padding: EdgeInsets.all(10),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
@@ -437,9 +518,15 @@ Widget _getBuildAlbum(String imgRoute, String imgAvatarRoute, String nameAlbum,
         child: Text(
           nameAlbum,
           style: TextStyle(
-              color: Color.fromRGBO(44, 40, 57, 1),
-              fontSize: 20,
-              fontWeight: FontWeight.bold),
+            color: Color.fromRGBO(44, 40, 57, 1),
+            fontSize: 20,
+            shadows: [
+              Shadow(
+                  color: Colors.white24,
+                  offset: Offset(-0.5, -0.5),
+                  blurRadius: 0)
+            ],
+          ),
         ),
       ),
       Center(
@@ -451,5 +538,20 @@ Widget _getBuildAlbum(String imgRoute, String imgAvatarRoute, String nameAlbum,
         ),
       ),
     ],
+  );
+}
+
+Widget _buildTitleRecentlyDisplayed(BuildContext context) {
+  return Container(
+    padding: EdgeInsets.all(20),
+    width: MediaQuery.of(context).size.width,
+    child: Text(
+      'Recently played',
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+        fontSize: 20,
+      ),
+    ),
   );
 }
